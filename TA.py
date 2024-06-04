@@ -35,7 +35,7 @@ class FindTeamApp:
         self.sign_in_frame = tk.Frame(self.root, bg= '#129ac7')
         self.sign_in_frame.pack(side='right', fill='both', expand=True)
         self.sign_in_label = tk.Label(self.sign_in_frame, text='Sign In', fg= 'white', bg= '#129ac7', font=('League Spartan', 45, 'bold'))
-        self.sign_in_label.pack(pady=(100, 20))  # Mengubah padding atas dan bawah
+        self.sign_in_label.pack(pady=(100, 20))
 
         # Tombol Admin
         self.admin_button = tk.Button(self.sign_in_frame, text='Admin', font=('League Spartan', 17, 'bold'), 
@@ -92,7 +92,7 @@ class FindTeamApp:
         self.password_entry = tk.Entry(self.admin_login_window, show='*', font=('League Spartan', 15))
         self.password_entry.pack(pady=(0, 10))
 
-                # Tombol login
+        # Tombol login
         self.login_button = tk.Button(self.admin_login_window, text='Login', command=self.login_admin, fg='#129ac7', bg='white', font=('League Spartan', 15,'bold'), width= 15, height= 1)
         self.login_button.pack(pady=(10, 10))
 
@@ -116,7 +116,7 @@ class FindTeamApp:
 
         if email in self.registered_accounts:
             user_type = self.registered_accounts[email].get('User Type', '')
-            if user_type == 'Admin':  # Check if the user type is admin
+            if user_type == 'Admin': 
                 admin_credentials = self.registered_accounts.get(email, {}).get('Password')
                 if admin_credentials and admin_credentials == password:
                     self.show_admin_dashboard()
@@ -139,7 +139,7 @@ class FindTeamApp:
         self.admin_dashboard_label = tk.Label(self.admin_dashboard_window, text='Menu Utama', fg='white', bg='#129ac7', font=('League Spartan', 40, 'bold'))
         self.admin_dashboard_label.pack(pady=(10, 0))
 
-        # Buttons for admin actions
+        # tampilan admin
         add_member_button = tk.Button(self.admin_dashboard_window, text="Add Member", command=self.add_member, fg='#129ac7', bg='white', font=('League Spartan', 15,'bold'), width= 15, height= 1)
         add_member_button.pack(pady=10)
 
@@ -149,7 +149,7 @@ class FindTeamApp:
         approve_permission_button = tk.Button(self.admin_dashboard_window, text="Approve Permission", command=self.approve_permission, fg='#129ac7', bg='white', font=('League Spartan', 15,'bold'), width= 15, height= 1)
         approve_permission_button.pack(pady=10)
 
-        # Button to go back
+        # tombol kembali
         back_button = tk.Button(self.admin_dashboard_window, text="Back", command=self.close_admin_dashboard, fg='#129ac7', bg='white', font=('League Spartan', 15,'bold'), width= 15, height= 1)
         back_button.pack(pady=10)
 
@@ -355,44 +355,32 @@ class FindTeamApp:
         self.user_dashboard_window.title('User Dashboard')
         self.user_dashboard_window.configure(bg='#129ac7')
 
-        # Create frame for the table
+        # tabel
         table_frame = tk.Frame(self.user_dashboard_window)
         table_frame.pack(pady=20)
-
-        # Headers for the table
         headers = ["Nama", "Skill", "Kontak yang dapat dihubungi"]
-
-        # Create Treeview widget
         self.tree = ttk.Treeview(table_frame, columns=headers, show="headings")
         self.tree.pack(fill="both", expand=True)
-
-        # Set column headings
         for header in headers:
             self.tree.heading(header, text=header)
-
-        # Display member data
         for member in self.members:
             self.tree.insert("", "end", values=(member['Name'], member['Skill'], member['Contact']))
-        
-        # Add border
         for col in headers:
             self.tree.column(col, anchor="center")
             self.tree.heading(col, text=col, anchor="center")
             self.tree.configure(show="headings", height=len(self.members))
 
-        # Search Entry
+        # search
         search_entry = tk.Entry(self.user_dashboard_window, font=('League Spartan', 12))
         search_entry.pack(pady=(10, 5))
-
-        # Search Button
         search_button = tk.Button(self.user_dashboard_window, text="Search", command=lambda: self.search_data(search_entry.get()), fg='#129ac7', bg='White', font=('League Spartan', 10, 'bold'), width=10, height=1)
         search_button.pack(pady=(0, 10))
 
-        # Button to propose a new member
+        # propose member
         propose_member_button = tk.Button(self.user_dashboard_window, text="Propose Member", command=self.propose_member, fg='#129ac7', bg='White', font=('League Spartan', 15, 'bold'), width=15, height=1)
         propose_member_button.pack(pady=10)
 
-        # Button to go back
+        # tombol kembali
         back_button = tk.Button(self.user_dashboard_window, text="Back", command=self.close_user_dashboard, fg='#129ac7', bg='White', font=('League Spartan', 15, 'bold'), width=15, height=1)
         back_button.pack(pady=10)
 
@@ -400,11 +388,8 @@ class FindTeamApp:
         self.user_dashboard_window.destroy()
 
     def search_data(self, keyword):
-        # Clear previous search results
         for item in self.tree.get_children():
             self.tree.delete(item)
-
-        # Search member data
         for member in self.members:
             if keyword.lower() in member['Name'].lower() or keyword.lower() in member['Skill'].lower() or keyword.lower() in member['Contact'].lower():
                 self.tree.insert("", "end", values=(member['Name'], member['Skill'], member['Contact']))
@@ -482,7 +467,7 @@ class FindTeamApp:
         self.sign_up_label = tk.Label(self.sign_up_window, text='Register Account', fg='white', bg='#129ac7', font=('League Spartan', 40, 'bold'))
         self.sign_up_label.pack(pady=(10, 0))
 
-        # memilih type akun judul
+        # memilih type akun
         user_type_label = tk.Label(self.sign_up_window, text='Select User Type:', font=('League Spartan', 20), fg='white', bg='#129ac7')
         user_type_label.pack(pady=20)
         self.user_type_var = tk.StringVar(self.sign_up_window)
